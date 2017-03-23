@@ -20,7 +20,7 @@ Pushes a single commit to master and generates a standard relmail wiki page.
 Pushes a single commit to master and B and generates a double relmail wiki page.
 
 ### git triple
-pushes a single commit to master, B, and production, then generates a triple relamil wiki page. *Use with caution.*
+pushes a single commit to master, B, and production, then generates a triple relmail wiki page. *Use with caution.*
 
 ### git lastcom
 Prints the hash of the last commit made to the current branch.
