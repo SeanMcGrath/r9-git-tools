@@ -43,4 +43,4 @@ Also depends on `chrome-cli`, which is available in brew.
 
 With chrome-cli installed, simply added all the scripts in this directory (the files without extensions) to your `PATH`. You may have to set the scripts as executable.
 
-Assuming you have a standard brew setup and own /usr/local/bin, you can simply clone this repo anywhere that is convenient and run `sh install.sh`.
+Assuming you have a standard brew setup and own /usr/local/bin, you can simply clone this repo anywhere that is convenient, `cd` into it, and run `sh install.sh`.
