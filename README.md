@@ -25,21 +25,21 @@ pushes a single commit to master, B, and production, then generates a triple rel
 ### git lastcom
 Prints the hash of the last commit made to the current branch.
 
-## git lastbr
+### git lastbr
 Prints the short name (e.g. R350b) of the last R9 branch. This is the B branch.
 
-## git prodbr
+### git prodbr
 Prints the short name (e.g. R350a) of the current production R9 branch.
 
-## git comtix
+### git comtix
 Commits any currently stages files with a commit message corresponding to the number and name of the current JIRA ticket open in chrome. *Only works properly with a single JIRA ticket open and a single chrome window open.*
 
-### Dependencies
+## Dependencies
 This package is based with the standard R9 toolset in mind (macbook pro, relmail, etc.) and may not work in other environments. The wiki/JIRA manipulation used here only works with Chrome.
 
 Also depends on `chrome-cli`, which is available in brew. 
 
-### Installation
+## Installation
 
 With chrome-cli installed, simply added all the scripts in this directory (the files without extensions) to your `PATH`. You may have to set the scripts as executable.
 
