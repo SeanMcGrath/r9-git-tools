@@ -1,0 +1,24 @@
+#! /bin/bash
+# push the last commit to master, b and prod.
+
+git pull
+git push
+
+last_commit=`git lastcom`
+last_branch=`git lastbr`
+last_branch=`git prodbr`
+
+git checkout $last_branch
+git cherry-pick $last_commit
+
+git pull
+git push
+
+git checkout $prod_branch
+git cherry-pick $last_commit
+
+git pull
+git push
+
+git checkout master
+wiki 3

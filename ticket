@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Lists the ticket numbers (e.g. ENG-123456) of all the JIRA ticket tabs open in the primary chrome window
+# typically fails if more than one chrome window is open
+
+JIRA_TABS=`chrome-cli list tabs | grep 'ENG.*Jira' | cut -d ' ' -f 1 | sed -e 's/\[//g' -e 's/\]//g'`
+for tab in $JIRA_TABS; do
+    chrome-cli execute '(function() { return document.getElementById("key-val").textContent + " " + document.getElementById("summary-val").textContent; })();' -t $tab
+done

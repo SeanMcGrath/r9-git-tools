@@ -1,0 +1,17 @@
+#! /bin/bash
+# push the last commit to master and b.
+
+git pull
+git push
+
+last_commit=`git lastcom`
+last_branch=`git lastbr`
+
+git checkout $last_branch
+git cherry-pick $last_commit
+
+git pull
+git push
+
+git checkout master
+wiki 2

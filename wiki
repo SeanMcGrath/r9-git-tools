@@ -1,0 +1,92 @@
+#!/bin/bash
+# sean mcgrath - smcgrath@kayak.com
+
+usage () {
+    echo 'usage: wiki [-hs] [-m MESSAGE] [# of commits]'
+    echo '  -h  show this help'
+    echo '  -s  suppress Jira ticket message from appearing in post header'
+    echo '  -m  replace Jira ticket message with MESSAGE'
+    echo ''
+    echo '  Automagically parses your relmail and prepares it for wiki submission.'
+}
+
+OPTIND=1
+show_message=true
+message=''
+
+# Handle options
+while getopts "hsm:" opt; do
+    case "$opt" in
+        h)
+            usage
+            exit 0
+            ;;
+        s)
+            show_message=false
+            ;;
+        m)
+            message=$OPTARG
+            ;;
+        *)
+            usage
+            exit 0
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "$1" = "--" ] && shift
+
+# get number of commits to search for, default 1
+commits=${1-1}
+if [[ ! $commits =~ ^-?[0-9]+$ ]] ; then
+    usage
+    exit 0
+fi
+
+# open browser
+chrome-cli open 'https://wiki.runwaynine.com/pages/createblogpost.action?spaceKey=REL' > /dev/null
+
+# grab relmail
+rel=`relmail -n ${1-1}`
+echo "$rel" | pbcopy
+
+# find affected branches
+branches=`echo "$rel" | grep -ohE 'R\d+[abcd]' | sort -u | tr '\n' ' ' | xargs`
+case `echo $branches | wc -w | xargs` in
+    1)
+        prefix='Master'
+        ;;
+    2)
+        prefix='Double'
+        ;;
+    3)
+        prefix='Triple'
+        ;;
+    *)
+        prefix=''
+esac
+
+# find ticket number
+ticket=`echo "$rel" | grep -ohE 'ENG-\d+' | sort -u | head -n 1 | xargs`
+
+# find ticket message
+if [ "$message" = '' ] ; then
+    message=`echo "$rel" | grep -ohE 'ENG-\d+ .*$' | cut -d' ' -f2- | sort -u`
+fi
+if [ `echo "$message" | wc -l | xargs` -ne "1" ] ; then
+    message=''
+fi
+
+# fill out forms
+chrome-cli execute "document.getElementById('content-title').value = '$prefix ($branches) $ticket';" > /dev/null
+if [ "$show_message" = true ] ; then
+    chrome-cli execute "document.getElementById('content-title').value += ' $message';" > /dev/null
+fi
+chrome-cli execute "document.getElementById('rte-insert-wikimarkup').click();" > /dev/null
+chrome-cli execute "document.getElementById('insert-wiki-textarea').value = 'hit paste!';" > /dev/null
+chrome-cli execute "document.getElementById('insert-wiki-textarea').select();"
+chrome-cli execute "document.getElementById('insert-wiki-textarea').addEventListener('paste', function() { setTimeout( function () { document.querySelector('#insert-wiki-markup-dialog .button-panel-button').click(); }, 1); });"
+
+open -a Google\ Chrome
+exit 1
