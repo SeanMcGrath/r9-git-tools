@@ -6,7 +6,7 @@ git push
 
 last_commit=`git lastcom`
 last_branch=`git lastbr`
-last_branch=`git prodbr`
+prod_branch=`git prodbr`
 
 git checkout $last_branch
 git cherry-pick $last_commit
