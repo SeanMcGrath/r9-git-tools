@@ -25,7 +25,7 @@ Pushes a single commit to master and B and generates a double relmail wiki page.
 pushes a single commit to master, B, and production, then generates a triple relmail wiki page. *Use with caution.*
 
 ### git lastcom
-Prints the hash of the last commit made to the current branch.
+Prints the hash of the last commit you made to the current branch.
 
 ### git lastbr
 Prints the short name (e.g. R350b) of the last R9 branch. This is the B branch.
