@@ -11,6 +11,8 @@ This tool does not submit the wiki entry it creates - you are free to edit and a
 ### ticket
 This tool scans your open chrome tabs and scrapes the numbers/names of any open jira tickets. It's typically used to auto-gen commit messages, e.g. `git commit -m "$(ticket)"` (assuming only one ticket is open in chrome.)
 
+`ticket` takes an optional `index` parameter to handle the case of multiple JIRA tickets being open in a single browser. If, for example, you have 3 JIRAs open in one chrome window, running `ticket` will print the names of all these tickets, one on each line. `ticket 1` will print the leftmost ticket in the tab order, `ticket 2` will print the second from the left, `ticket 3` will print the third from the left, etc.
+
 ## Git extensions
 
 ### git single
@@ -43,4 +45,4 @@ Also depends on `chrome-cli`, which is available in brew.
 
 With chrome-cli installed, simply added all the scripts in this directory (the files without extensions) to your `PATH`. You may have to set the scripts as executable.
 
-Assuming you have a standard brew setup and own /usr/local/bin, you can simply clone this repo anywhere that is convenient, `cd` into it, and run `sh install.sh`.
+Assuming you have a standard brew setup and own /usr/local/bin, you can simply clone this repo anywhere that is convenient, `cd` into it, and run `sh install.sh`. This will install all the commands as symlinks to this repository, so you can just pull this repo to update.
