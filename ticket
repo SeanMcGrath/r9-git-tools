@@ -3,7 +3,24 @@
 # Lists the ticket numbers (e.g. ENG-123456) of all the JIRA ticket tabs open in the primary chrome window
 # typically fails if more than one chrome window is open
 
+usage () {
+    echo 'usage: ticket [-h] [index]'
+    echo '  -h     show this help'
+    echo '  index  the 1-based index of the open JIRA ticket to print, defined'
+    echo '         from the left to right order of open chrome tabs.'
+    echo '         ex. if 3 JIRA tickets are open, "ticket 2" prints only the second'
+    echo ''
+    echo '  print the number and title of JIRA ticket(s) open in chrome'
+}
+
+[[ "$@" == *'-h'* ]] && usage && exit 0
+
 JIRA_TABS=`chrome-cli list tabs | grep 'ENG.*Jira' | cut -d ' ' -f 1 | sed -e 's/\[//g' -e 's/\]//g'`
+
+if [[ $1 -gt 0 ]]; then
+    JIRA_TABS=`echo "$JIRA_TABS" | sed "${1}q;d"`
+fi
+
 for tab in $JIRA_TABS; do
     chrome-cli execute '(function() { return document.getElementById("key-val").textContent + " " + document.getElementById("summary-val").textContent; })();' -t $tab
 done
