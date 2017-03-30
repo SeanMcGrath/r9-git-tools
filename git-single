@@ -1,6 +1,18 @@
 #!/bin/bash
 
+gecho 'Pulling master'
+gecho ''
+
 git pull
+
+gecho ''
+gecho 'Pushing to master'
+gecho ''
+
 git push
 
-wiki
+gecho ''
+gecho 'Preparing wiki post, watch your browser...'
+gecho ''
+
+wiki 1

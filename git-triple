@@ -1,24 +1,73 @@
 #! /bin/bash
 # push the last commit to master, b and prod.
 
+last_commit=`git lastcom`
+
+gecho ' Pulling master'
+gecho ''
+
 git pull
+
+gecho ''
+gecho 'Pushing to master'
+gecho ''
+
 git push
 
-last_commit=`git lastcom`
 last_branch=`git lastbr`
 prod_branch=`git prodbr`
 
+gecho ''
+gecho "Switching to branch $last_branch"
+gecho ''
+
 git checkout $last_branch
+
+gecho ''
+gecho "Cherry-picking commit $last_commit"
+gecho ''
+
 git cherry-pick $last_commit
 
+gecho ''
+gecho "Pulling $last_branch"
+gecho ''
+
 git pull
+
+gecho ''
+gecho "Pushing $last_branch"
+gecho ''
+
 git push
+
+gecho ''
+gecho "Switching to branch $prod_branch"
+gecho ''
 
 git checkout $prod_branch
+
+gecho ''
+gecho "Cherry-picking commit $last_commit"
+gecho ''
+
 git cherry-pick $last_commit
 
-git pull
-git push
+gecho ''
+gecho "Pulling $prod_branch"
+gecho ''
 
+git pull
+
+gecho ''
+gecho "Pushing $prod_branch"
+gecho ''
+
+git push
 git checkout master
+
+gecho ''
+gecho 'Preparing wiki post, watch your browser...'
+gecho ''
+
 wiki 3

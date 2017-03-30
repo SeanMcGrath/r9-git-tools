@@ -13,6 +13,9 @@ This tool scans your open chrome tabs and scrapes the numbers/names of any open 
 
 `ticket` takes an optional `index` parameter to handle the case of multiple JIRA tickets being open in a single browser. If, for example, you have 3 JIRAs open in one chrome window, running `ticket` will print the names of all these tickets, one on each line. `ticket 1` will print the leftmost ticket in the tab order, `ticket 2` will print the second from the left, `ticket 3` will print the third from the left, etc.
 
+### gecho
+Convenience script to print things to the OSX bash terminal in green. fun!
+
 ## Git extensions
 
 ### git single
